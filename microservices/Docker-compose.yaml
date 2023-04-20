@@ -1,0 +1,87 @@
+version: "3"
+services:
+  app:
+    container_name: Landing
+    build: 
+      context: ./landing
+    ports:
+      - "5050:5050"
+    depends_on:
+      - addition
+      - subtraction
+      - multiplication
+      - division
+      - exponent
+      - gcd
+      - lcm
+      - equal
+    environment:
+      - ADDITION_SERVICE_URL=http://add-service:5051
+      - SUBTRACTION_SERVICE_URL=http://minus-service:5052
+      - MULTIPLICATION_SERVICE_URL=http://multiply-service:5053
+      - DIVISION_SERVICE_URL=http://division-service:5054
+      - EXPONENT_SERVICE_URL=http://exponent-service:5055
+      - GCD_SERVICE_URL=http://gcd-service:5056
+      - LCM_SERVICE_URL=http://lcm-service:5057
+      - EQUAL_SERVICE_URL=http://equal-service:5058
+    networks:
+      - my-network
+  addition:
+    container_name: add-service
+    build:
+      context: ./add-service
+      dockerfile: Dockerfile-addition
+    networks:
+      - my-network
+  subtraction:
+    container_name: minus-service
+    build:
+      context: ./minus-service
+      dockerfile: Dockerfile-subtraction
+    networks:
+      - my-network
+  multiplication:
+    container_name: multiply-service
+    build:
+      context: ./multiply-service
+      dockerfile: Dockerfile-multiplication
+    networks:
+      - my-network
+  division:
+    container_name: division-service
+    build:
+      context: ./division-service
+      dockerfile: Dockerfile-division
+    networks:
+      - my-network
+  exponent:
+    container_name: exponent-service
+    build:
+      context: ./exponent-service
+      dockerfile: Dockerfile-exponent
+    networks:
+      - my-network
+  gcd:
+    container_name: gcd-service
+    build:
+      context: ./gcd-service
+      dockerfile: Dockerfile-gcd
+    networks:
+      - my-network
+  lcm:
+    container_name: lcm-service
+    build:
+      context: ./lcm-service
+      dockerfile: Dockerfile-lcm
+    networks:
+      - my-network
+  equal:
+    container_name: equal-service
+    build:
+      context: ./equal-service
+      dockerfile: Dockerfile-equal
+    networks:
+      - my-network
+networks:
+  my-network:
+    driver: bridge
